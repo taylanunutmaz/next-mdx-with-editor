@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  BlockTypeSelect,
   BoldItalicUnderlineToggles,
   MDXEditor,
   MDXEditorMethods,
@@ -34,6 +35,7 @@ const Editor: FC<EditorProps> = ({ markdown }) => {
         Get markdown
       </button>
       <MDXEditor
+        contentEditableClassName="prose"
         ref={ref}
         markdown="hello world"
         onChange={console.log}
@@ -47,7 +49,7 @@ const Editor: FC<EditorProps> = ({ markdown }) => {
               <>
                 {" "}
                 <UndoRedo />
-                <BoldItalicUnderlineToggles />
+                <BlockTypeSelect />
               </>
             ),
           }),
