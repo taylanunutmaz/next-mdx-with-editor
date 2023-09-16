@@ -15,10 +15,11 @@ import {
 } from "@mdxeditor/editor";
 import { FC, useRef } from "react";
 import InsertText from "./insert-text";
+import path from "path";
+import saveMarkdown from "@/app/actions/save-markdown";
 
 interface EditorProps {
   markdown: string;
-  editorRef?: React.MutableRefObject<MDXEditorMethods | null>;
 }
 
 /**
@@ -27,18 +28,18 @@ interface EditorProps {
  */
 const Editor: FC<EditorProps> = ({ markdown }) => {
   const ref = useRef<MDXEditorMethods>(null);
+
+  const dataFilePath = path.join(process.cwd(), "src/app/hello.mdx");
+
   return (
     <>
-      <button onClick={() => ref.current?.setMarkdown("new markdown")}>
-        Set new markdown
-      </button>
-      <button onClick={() => console.log(ref.current?.getMarkdown())}>
-        Get markdown
+      <button onClick={() => saveMarkdown(ref.current?.getMarkdown())}>
+        Save markdown
       </button>
       <MDXEditor
         contentEditableClassName="prose"
         ref={ref}
-        markdown="hello world"
+        markdown={markdown}
         onChange={console.log}
         plugins={[
           jsxPlugin({ jsxComponentDescriptors }),
