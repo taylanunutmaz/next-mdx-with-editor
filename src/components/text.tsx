@@ -1,3 +1,3 @@
-export default function Text({ children }: { children: React.ReactNode }) {
-  return <p>{children}, Text</p>;
+export default function Text({ val }: { val: string }) {
+  return <>{val}, Textoo</>;
 }

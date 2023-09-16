@@ -1,18 +1,20 @@
 "use client";
 
+import { jsxComponentDescriptors } from "@/utils/jsxComponentDescriptors";
 import {
   BlockTypeSelect,
-  BoldItalicUnderlineToggles,
   MDXEditor,
   MDXEditorMethods,
   UndoRedo,
   headingsPlugin,
+  jsxPlugin,
   listsPlugin,
   quotePlugin,
   thematicBreakPlugin,
   toolbarPlugin,
 } from "@mdxeditor/editor";
 import { FC, useRef } from "react";
+import InsertText from "./insert-text";
 
 interface EditorProps {
   markdown: string;
@@ -25,7 +27,6 @@ interface EditorProps {
  */
 const Editor: FC<EditorProps> = ({ markdown }) => {
   const ref = useRef<MDXEditorMethods>(null);
-
   return (
     <>
       <button onClick={() => ref.current?.setMarkdown("new markdown")}>
@@ -40,6 +41,7 @@ const Editor: FC<EditorProps> = ({ markdown }) => {
         markdown="hello world"
         onChange={console.log}
         plugins={[
+          jsxPlugin({ jsxComponentDescriptors }),
           headingsPlugin(),
           listsPlugin(),
           quotePlugin(),
@@ -48,6 +50,7 @@ const Editor: FC<EditorProps> = ({ markdown }) => {
             toolbarContents: () => (
               <>
                 {" "}
+                <InsertText />
                 <UndoRedo />
                 <BlockTypeSelect />
               </>
