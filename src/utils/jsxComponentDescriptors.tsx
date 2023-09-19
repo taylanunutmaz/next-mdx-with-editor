@@ -1,4 +1,3 @@
-import Text from "@/components/text";
 import { GenericJsxEditor, JsxComponentDescriptor } from "@mdxeditor/editor";
 
 export const jsxComponentDescriptors: JsxComponentDescriptor[] = [
