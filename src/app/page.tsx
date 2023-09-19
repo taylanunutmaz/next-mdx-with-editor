@@ -1,24 +1,28 @@
-import Link from "next/link";
-import path from "path";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 import fsPromises from "fs/promises";
-import { MDXRemote } from "next-mdx-remote/rsc";
-import Text from "@/components/text";
+import path from "path";
+import Link from "next/link";
 
-export default async function Page() {
-  const dataFilePath = path.join(process.cwd(), "src/app/hello.mdx");
+export default async function Home() {
+  const scanResult = await fsPromises.readdir(
+    path.join(process.cwd(), "src/contents"),
+    { withFileTypes: true }
+  );
 
-  const markdown = await fsPromises.readFile(dataFilePath, "utf-8");
+  const fileNames = scanResult
+    .filter((item: any) => !item.isDirectory())
+    .map((item: any) => item.name.replace(/\.mdx$/, ""));
 
   return (
-    <>
-      <Link href="/editor"> Go to the Editor </Link>
-      <MDXRemote
-        source={markdown}
-        components={{
-          Text: Text,
-        }}
-      />
-      {/* <HelloWorld /> */}
-    </>
+    <div>
+      {fileNames.map((fileName: string) => {
+        return (
+          <Link key={fileName} href={`/contents/${fileName}`}>
+            {fileName}
+          </Link>
+        );
+      })}
+    </div>
   );
 }

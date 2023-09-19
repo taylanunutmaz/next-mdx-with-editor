@@ -7,8 +7,16 @@ const EditorComp = dynamic(() => import("@/components/mdx-editor"), {
   ssr: false,
 });
 
-export default async function Home() {
-  const dataFilePath = path.join(process.cwd(), "src/app/hello.mdx");
+export default async function Editor({
+  params: { fileName },
+}: {
+  params: { fileName: string };
+}) {
+  if (fileName.includes("/")) {
+    return;
+  }
+
+  const dataFilePath = path.join(process.cwd(), `src/contents/${fileName}.mdx`);
 
   const markdown = await fsPromises.readFile(dataFilePath, "utf-8");
 

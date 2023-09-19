@@ -29,8 +29,6 @@ interface EditorProps {
 const Editor: FC<EditorProps> = ({ markdown }) => {
   const ref = useRef<MDXEditorMethods>(null);
 
-  const dataFilePath = path.join(process.cwd(), "src/app/hello.mdx");
-
   return (
     <>
       <button onClick={() => saveMarkdown(ref.current?.getMarkdown())}>
